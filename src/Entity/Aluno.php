@@ -1,29 +1,27 @@
 <?php
 
-
 namespace Alura\Doctrine\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @Entity 
+ * @Entity
  */
-
 class Aluno
 {
     /**
-     * @id
+     * @Id
      * @GeneratedValue
      * @Column(type="integer")
      */
     private $id;
     /**
-     *  @Column(type="string")
+     * @Column(type="string")
      */
     private $nome;
     /**
-     * @OneToMany(targetEntity="Telefone", mappedBy="aluno")
+     * @OneToMany(targetEntity="Telefone", mappedBy="aluno", cascade={"remove", "persist"})
      */
     private $telefones;
 
@@ -52,23 +50,12 @@ class Aluno
     {
         $this->telefones->add($telefone);
         $telefone->setAluno($this);
-        
+
         return $this;
     }
 
     public function getTelefones(): Collection
     {
         return $this->telefones;
-    }
-
-    public function getAluno(): Aluno
-    {
-        return $this->aluno;
-    }
-
-    public function setAluno(Aluno $aluno): self
-    {
-        $this->aluno = $aluno;
-        return $this;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Entity\Telefone;
 use Alura\Doctrine\Helper\EntityManagerFactory;
 
 
@@ -14,15 +15,13 @@ $alunoRepository = $entityManager->getRepository(Aluno::class);
 /** @var Aluno[] $alunoList */
 $alunoList = $alunoRepository->findAll();
 
-foreach($alunoList as $aluno){
+foreach ($alunoList as $aluno) {
+  $telefones = $aluno
+    ->getTelefones()
+    ->map(function (Telefone $telefone) {
+      return $telefone->getNumero();
+    })
+    ->toArray();
   echo "ID {$aluno->getId()} \n Nome: {$aluno->getNome()} \n\n";
+  echo "Telefones: " . implode(', ', $telefones);
 }
-
-$nico = $alunoRepository->find(2);
-echo $nico->getNome();
-
-$bianca = $alunoRepository->findOneBy([
-  'nome' => 'bianca',
-]);
-
-var_dump($bianca);
