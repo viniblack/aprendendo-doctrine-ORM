@@ -9,9 +9,10 @@ $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
 $id = $argv[1];
-$novoNome = $argv[2]; 
+$novoNome = $argv[2];
 
 $aluno = $entityManager->find(Aluno::class, $id);
 $aluno->setNome($novoNome);
 
 $entityManager->flush();
+
